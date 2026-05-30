@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A1 Tech Solution | AI Call Flow Simulator</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="glow-bg bg-cyan"></div>
+    <div class="glow-bg bg-purple"></div>
+
+    <header class="app-header">
+        <div class="header-logo">
+            <div class="logo-box">
+                <span class="logo-text-a1">A1</span>
+            </div>
+            <div class="logo-title">
+                <h1>AI Voice Agent Builder</h1>
+                <span class="agency-tag">by A1 Tech Solution</span>
+            </div>
+        </div>
+        <nav class="header-nav">
+            <a href="../index.html" class="nav-back-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m12 19-7-7 7-7"/><path d="M19 12H5"/></svg>
+                Back to Hub
+            </a>
+        </nav>
+    </header>
+
+    <main class="app-container">
+        <!-- Left Panel: Configuration & Settings -->
+        <section class="control-panel glass-card">
+            <div class="panel-header">
+                <svg xmlns="http://www.w3.org/2000/svg" class="panel-icon icon-cyan" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.1a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+                <h2>Agent Configurations</h2>
+            </div>
+            
+            <div class="form-group">
+                <label for="agent-preset">Select Industry Preset</label>
+                <select id="agent-preset">
+                    <option value="restaurant">Bistro Table Booking (RAG + Actions)</option>
+                    <option value="dental">Dental Clinic Scheduler (DB Logging)</option>
+                    <option value="support">ISP Support Receptionist (Troubleshooting Flow)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="agent-voice">AI Voice Model</label>
+                <select id="agent-voice">
+                    <option value="alloy">Alloy (Neutral, professional)</option>
+                    <option value="echo">Echo (Warm male tone)</option>
+                    <option value="shimmer">Shimmer (Sleek female tone)</option>
+                    <option value="nova">Nova (Energetic, friendly)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="agent-rag">Knowledge Document (RAG)</label>
+                <div class="rag-badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    <span id="rag-filename">bistro_menu_v4.pdf</span>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="form-group">
+                <label>System Prompts & Settings</label>
+                <textarea id="agent-prompt" rows="6" readonly></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <label for="agent-temp">Temperature</label>
+                    <input type="range" id="agent-temp" min="0" max="1" step="0.1" value="0.6">
+                    <span class="range-val" id="temp-val">0.6</span>
+                </div>
+                <div class="form-col">
+                    <label for="agent-speed">Response Delay</label>
+                    <input type="range" id="agent-speed" min="200" max="1500" step="100" value="400">
+                    <span class="range-val" id="speed-val">400ms</span>
+                </div>
+            </div>
+
+            <button id="btn-start-simulation" class="btn btn-primary btn-glow">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                Run Call Simulator
+            </button>
+        </section>
+
+        <!-- Center Panel: Live Flow Editor Canvas -->
+        <section class="canvas-panel glass-card">
+            <div class="panel-header">
+                <svg xmlns="http://www.w3.org/2000/svg" class="panel-icon icon-purple" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2.5 3.19-2.5 5.5h20c0-2.31-1-4.24-2.5-5.5"/><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6v6l4 2"/></svg>
+                <h2>Twilio AI Call Pipeline</h2>
+            </div>
+            
+            <div class="node-canvas" id="canvas">
+                <!-- SVG Connections Grid Overlay -->
+                <svg class="canvas-connections" id="connections-svg"></svg>
+                
+                <!-- Node 1: Inbound Webhook -->
+                <div class="node" id="node-webhook" data-node="1">
+                    <div class="node-badge">VoIP</div>
+                    <div class="node-icon bg-blue">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div class="node-info">
+                        <h3>Twilio Call Trigger</h3>
+                        <p>Webhook: /twilio/incoming</p>
+                    </div>
+                    <div class="node-dot out" data-dot="webhook-out"></div>
+                </div>
+
+                <!-- Node 2: OpenAI Audio Bridge -->
+                <div class="node" id="node-bridge" data-node="2">
+                    <div class="node-badge">Websocket</div>
+                    <div class="node-icon bg-purple">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20"/><path d="M17 5v14"/><path d="M22 9v6"/><path d="M7 5v14"/><path d="M2 9v6"/></svg>
+                    </div>
+                    <div class="node-info">
+                        <h3>Audio Stream Bridge</h3>
+                        <p>OpenAI Realtime API</p>
+                    </div>
+                    <div class="node-dot in" data-dot="bridge-in"></div>
+                    <div class="node-dot out" data-dot="bridge-out"></div>
+                </div>
+
+                <!-- Node 3: ChromaDB RAG Vector Store -->
+                <div class="node" id="node-rag" data-node="3">
+                    <div class="node-badge">Database</div>
+                    <div class="node-icon bg-cyan">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M3 5V19A9 3 0 0 0 21 19V5"/><path d="M3 12A9 3 0 0 0 21 12"/></svg>
+                    </div>
+                    <div class="node-info">
+                        <h3>ChromaDB RAG</h3>
+                        <p>Semantic Vector Match</p>
+                    </div>
+                    <div class="node-dot in" data-dot="rag-in"></div>
+                    <div class="node-dot out" data-dot="rag-out"></div>
+                </div>
+
+                <!-- Node 4: Action Webhook Hook -->
+                <div class="node" id="node-action" data-node="4">
+                    <div class="node-badge">Integration</div>
+                    <div class="node-icon bg-emerald">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                    </div>
+                    <div class="node-info">
+                        <h3>Action Trigger Hook</h3>
+                        <p>SQL Logging & Booking Sync</p>
+                    </div>
+                    <div class="node-dot in" data-dot="action-in"></div>
+                    <div class="node-dot out" data-dot="action-out"></div>
+                </div>
+
+                <!-- Node 5: Success Callback -->
+                <div class="node" id="node-callback" data-node="5">
+                    <div class="node-badge">Callback</div>
+                    <div class="node-icon bg-gold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    </div>
+                    <div class="node-info">
+                        <h3>Session Wrap-up</h3>
+                        <p>SMS Status & Hang Up</p>
+                    </div>
+                    <div class="node-dot in" data-dot="callback-in"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Right Panel: Live Interaction / Transcripts & Websocket Logs -->
+        <section class="live-panel glass-card">
+            <div class="tabs-header">
+                <button class="tab-btn active" data-tab="transcript">Live Dialogue</button>
+                <button class="tab-btn" data-tab="logs">
+                    System Webhook Logs
+                    <span class="ping-indicator glow-dot"></span>
+                </button>
+            </div>
+            
+            <!-- Tab Content: Live Dialogue Transcript -->
+            <div class="tab-content active" id="tab-transcript">
+                <div class="audio-wave-container">
+                    <span class="call-duration" id="call-timer">00:00</span>
+                    <div class="live-indicator">
+                        <span class="pulse-dot bg-red"></span>
+                        <span id="call-status">IDLE</span>
+                    </div>
+                    
+                    <div class="audio-waves" id="waveform">
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                        <div class="wave-bar"></div>
+                    </div>
+                </div>
+
+                <div class="transcript-scroll" id="transcript-container">
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        </div>
+                        <p>No active call. Click "Run Call Simulator" to start the conversation.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Websocket & Webhook logs -->
+            <div class="tab-content" id="tab-logs">
+                <div class="console-logs" id="logs-container">
+                    <div class="log-entry system">
+                        <span class="log-time">[16:37:01]</span>
+                        <span class="log-text">System initialization ready. Listening for sandbox trigger.</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>&copy; 2026 A1 Tech Solution. Developed as an interactive agency showcase.</p>
+    </footer>
+
+    <script src="app.js"></script>
+</body>
+</html>
